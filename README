@@ -1,1 +1,8 @@
-README TEST
+This is the java-security for gamboo.
+In the Folder "Java Security" is a eclipse project where you can test everything in the class: Evil.MyCode.
+
+At this time it's only a alpha version because in the next time I will improve:
++ Documentation
++ Overflow problem
++ Loading classes over the classLoader
++ Every Object is a seperate process
