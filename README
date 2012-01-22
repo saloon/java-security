@@ -6,3 +6,4 @@ At this time it's only a alpha version because in the next time I will improve:
 + Overflow problem
 + Loading classes over the classLoader
 + Every Object is a seperate process
++ better Exception-handling
