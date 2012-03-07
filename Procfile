@@ -1,1 +1,1 @@
-app:    java -cp target/classes:target/dependency/* Main
+app: cd target/classes && java Main
