@@ -47,8 +47,8 @@ public class SecureInstance implements Runnable {
 	}
 
 	private final String className;
-	private long maxCPUTime = 100;
-	private long maxRealTime = 200;
+	private long maxCPUTime = 10000;
+	private long maxRealTime = 20000;
 	private RunMethod method = null;
 
 	private Thread ownThread = null;
@@ -116,9 +116,7 @@ public class SecureInstance implements Runnable {
 	 * 
 	 * @param methodName
 	 *            String Name of the Method
-	 * @param parameter
-	 *            Object all the parameters ...
-	 */
+     */
 	public Object callMethod(String methodName) throws Exception {
 		method = new RunMethod(methodName, this);
 		return method.getReturnValue();

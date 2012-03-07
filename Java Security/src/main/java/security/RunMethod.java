@@ -26,8 +26,8 @@ class RunMethod implements Runnable {
 	}
 
 	private Boolean found = true;
-	private long maxCPUTime = 100;
-	private long maxRealTime = 200;
+	private long maxCPUTime = 10000;
+	private long maxRealTime = 20000;
 	private Method method = null;
 
 	private String methodName = null;
