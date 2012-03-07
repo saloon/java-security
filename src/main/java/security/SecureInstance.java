@@ -47,8 +47,8 @@ public class SecureInstance implements Runnable {
 	}
 
 	private final String className;
-	private long maxCPUTime = 10000;
-	private long maxRealTime = 20000;
+	private long maxCPUTime = 400;
+	private long maxRealTime = 1000;
 	private RunMethod method = null;
 
 	private Thread ownThread = null;
