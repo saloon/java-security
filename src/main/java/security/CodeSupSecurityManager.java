@@ -1,25 +1,3 @@
-/**
- *	Copyright (C) 2011 gamboo.at
- *	
- *	Permission is hereby granted, free of charge, to any person obtaining a copy of
- *	this software and associated documentation files (the "Software"), to deal in
- *	the Software without restriction, including without limitation the rights to
- *	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- *	of the Software, and to permit persons to whom the Software is furnished to do
- *	so, subject to the following conditions:
- *	
- *	The above copyright notice and this permission notice shall be included in all
- *	copies or substantial portions of the Software.
- *	
- *	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING for,
- *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- *	SOFTWARE.
- */
-
 package security;
 
 import java.io.FileDescriptor;
@@ -34,10 +12,10 @@ import java.util.Vector;
  * 
  * @author Nicolas Dular <nicolas.dular@myxcode.at>
  */
-public class GambooSecurityManager extends SecurityManager {
+public class CodeSupSecurityManager extends SecurityManager {
 
 	// Singelton 
-	private static GambooSecurityManager instance;
+	private static CodeSupSecurityManager instance;
 
 	/**  allowedPermissions denies specific permissions */
 	private final Vector<String> allowedPermissions = new Vector<String>();
@@ -57,14 +35,14 @@ public class GambooSecurityManager extends SecurityManager {
 	 * 
 	 * @return GambooSecurityManager
 	 */
-	public static GambooSecurityManager getInstance() {
-		if (GambooSecurityManager.instance == null) {
-			GambooSecurityManager.instance = new GambooSecurityManager();
+	public static CodeSupSecurityManager getInstance() {
+		if (CodeSupSecurityManager.instance == null) {
+			CodeSupSecurityManager.instance = new CodeSupSecurityManager();
 		}
-		return GambooSecurityManager.instance;
+		return CodeSupSecurityManager.instance;
 	}
 
-	private GambooSecurityManager() {
+	private CodeSupSecurityManager() {
 		// permission specification
 		allowedPermissions.add("suppressAccessChecks");
 		allowedPermissions.add("accessClassInPackage.sun.reflect");
@@ -77,7 +55,7 @@ public class GambooSecurityManager extends SecurityManager {
 	 */
 	private boolean accessOK() {
 		permission = false;
-
+	
 		// if there is a thread
 		if (applicationThreads.size() == 0) {
 			permission = true;

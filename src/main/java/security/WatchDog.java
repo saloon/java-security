@@ -1,18 +1,3 @@
-/**
- * Copyright 2011 gamboo.at
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License. You may obtain
- * a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- */
 package security;
 
 import java.lang.management.ManagementFactory;
@@ -30,6 +15,7 @@ public class WatchDog implements Runnable {
 	private static WatchDog instance = null;
 	private static String securityKey = null;
 
+	private Runtime runtime = Runtime.getRuntime();
 	private ObservedThread toObserve = null;
 	private ThreadMXBean threadManager = ManagementFactory.getThreadMXBean();
 	private Thread ownThread;
@@ -43,7 +29,7 @@ public class WatchDog implements Runnable {
 	private WatchDog() {
 		this.ownThread = new Thread(this);
 		// Set the permission for this Thread
-		GambooSecurityManager.getInstance().allowThread(securityKey, ownThread);
+		CodeSupSecurityManager.getInstance().allowThread(securityKey, ownThread);
 		this.ownThread.setName("WatchDogThread");
 		this.ownThread.start();
 	}
@@ -147,7 +133,10 @@ public class WatchDog implements Runnable {
 	 */
 	public void run() {
 		long toWait;
+		
+		
 
+		
 		// If there is no thread to observe, the WatchDog waits until it gets notified
 		if (this.toObserve == null) {
 			synchronized (this) {
@@ -189,11 +178,14 @@ public class WatchDog implements Runnable {
 								continue;
 							}
 						}
-	
+						
+						//Debugger.getInstance().print("###### CHECKING THREAD FOR MAXIMUM OF TIME " + runtime.totalMemory()/(1024*1024));
 						// Check if maximum of time exceeded
 						if (toObserve.getCurrentRealTime() >= this.toObserve.getMaxRealTime()
-								|| toObserve.getCurrentCPUTime() <= 0) {
+								|| toObserve.getCurrentCPUTime() <= 0
+								|| (runtime.totalMemory()/(1024*1024)) > 100) {
 							// if time exceeded - stop the thread
+							
 								if(toObserve.isAlive())
 									toObserve.getThread().stop();
 								

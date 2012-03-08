@@ -1,9 +1,3 @@
-This is the java-security for gamboo.
-In the Folder "Java Security" is an eclipse project where you can test everything in the class: Evil.MyCode.
-
-At this time it's only an alpha version because in the next time I will improve:
-+ Documentation
-+ Overflow problem
-+ Loading classes over the classLoader
-+ Every Object is a seperate process
-+ better Exception-handling
+This project was developed for codesup.com.
+With it it's possible to execute anonymous and untrusted code in Java.
+At this time we are at an alpha version but we'll release the beta soon.

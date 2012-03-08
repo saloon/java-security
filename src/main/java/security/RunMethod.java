@@ -26,8 +26,8 @@ class RunMethod implements Runnable {
 	}
 
 	private Boolean found = true;
-	private long maxCPUTime = 10000;
-	private long maxRealTime = 20000;
+	private long maxCPUTime = 1000;
+	private long maxRealTime = 2000;
 	private Method method = null;
 
 	private String methodName = null;
@@ -129,7 +129,7 @@ class RunMethod implements Runnable {
 		if (secureInstance.getInstance() != null) {
 
 			// Initialize a new Thread with a random ThreadGroup and a new Name
-			ownThread = new Thread(GambooSecurityManager.getInstance()
+			ownThread = new Thread(CodeSupSecurityManager.getInstance()
 					.getThreadGroup(securityKey), this,
 					secureInstance.getClassName() + "." + methodName);
 
