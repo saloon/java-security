@@ -1,4 +1,6 @@
 .settings
-target
+target/classes
+target/maven-archiver
+target/surefire
 .classpath
 .project
