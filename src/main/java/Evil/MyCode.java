@@ -20,6 +20,7 @@ public class MyCode {
 	public void endlessLoop(){
 		while(true){
             Byte[] x = new Byte[100000033];
+            
         }
 	}
 

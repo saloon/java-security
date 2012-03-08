@@ -8,10 +8,10 @@ public class Main {
 	public static void main(String[] arg) {
 		
 		// Set the SecurityManager and register every classes with the security-key
-		System.setSecurityManager(GambooSecurityManager.getInstance()); 
-	    String key = GambooSecurityManager.getInstance().getSecurityKey();
+		System.setSecurityManager(CodeSupSecurityManager.getInstance()); 
+	    String key = CodeSupSecurityManager.getInstance().getSecurityKey();
 		
-		GambooSecurityManager.getInstance().allowThread(key,Thread.currentThread());
+		CodeSupSecurityManager.getInstance().allowThread(key,Thread.currentThread());
 		SecureInstance.setSecurityKey(key);
 		WatchDog.setSecurityKey(key);
 		

@@ -28,7 +28,7 @@ public class WatchDog implements Runnable {
 	private WatchDog() {
 		this.ownThread = new Thread(this);
 		// Set the permission for this Thread
-		GambooSecurityManager.getInstance().allowThread(securityKey, ownThread);
+		CodeSupSecurityManager.getInstance().allowThread(securityKey, ownThread);
 		this.ownThread.setName("WatchDogThread");
 		this.ownThread.start();
 	}
@@ -179,7 +179,8 @@ public class WatchDog implements Runnable {
 						if (toObserve.getCurrentRealTime() >= this.toObserve.getMaxRealTime()
 								|| toObserve.getCurrentCPUTime() <= 0) {
 							// if time exceeded - stop the thread
-								if(toObserve.isAlive())
+							
+								while(toObserve.isAlive())
 									toObserve.getThread().stop();
 								
 							Debugger.getInstance().print("The thread " + toObserve.getThread() + " was too slow");

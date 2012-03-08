@@ -26,8 +26,8 @@ public class SecureInstance implements Runnable {
 	}
 
 	private final String className;
-	private long maxCPUTime = 10000;
-	private long maxRealTime = 20000;
+	private long maxCPUTime = 1000;
+	private long maxRealTime = 2000;
 	private RunMethod method = null;
 
 	private Thread ownThread = null;
@@ -162,7 +162,7 @@ public class SecureInstance implements Runnable {
 	 */
 	private void startThread() throws Exception {
 		// Create a new Thread instance with a random ThreadGroup
-		ownThread = new Thread(GambooSecurityManager.getInstance()
+		ownThread = new Thread(CodeSupSecurityManager.getInstance()
 				.getThreadGroup(SecureInstance.securityKey), this, className);
 
 		// Add the Thread to the WatchDog to observe it

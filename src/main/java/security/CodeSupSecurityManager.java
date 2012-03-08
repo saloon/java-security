@@ -12,10 +12,10 @@ import java.util.Vector;
  * 
  * @author Nicolas Dular <nicolas.dular@myxcode.at>
  */
-public class GambooSecurityManager extends SecurityManager {
+public class CodeSupSecurityManager extends SecurityManager {
 
 	// Singelton 
-	private static GambooSecurityManager instance;
+	private static CodeSupSecurityManager instance;
 
 	/**  allowedPermissions denies specific permissions */
 	private final Vector<String> allowedPermissions = new Vector<String>();
@@ -35,14 +35,14 @@ public class GambooSecurityManager extends SecurityManager {
 	 * 
 	 * @return GambooSecurityManager
 	 */
-	public static GambooSecurityManager getInstance() {
-		if (GambooSecurityManager.instance == null) {
-			GambooSecurityManager.instance = new GambooSecurityManager();
+	public static CodeSupSecurityManager getInstance() {
+		if (CodeSupSecurityManager.instance == null) {
+			CodeSupSecurityManager.instance = new CodeSupSecurityManager();
 		}
-		return GambooSecurityManager.instance;
+		return CodeSupSecurityManager.instance;
 	}
 
-	private GambooSecurityManager() {
+	private CodeSupSecurityManager() {
 		// permission specification
 		allowedPermissions.add("suppressAccessChecks");
 		allowedPermissions.add("accessClassInPackage.sun.reflect");
