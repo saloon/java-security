@@ -55,7 +55,7 @@ public class CodeSupSecurityManager extends SecurityManager {
 	 */
 	private boolean accessOK() {
 		permission = false;
-
+	
 		// if there is a thread
 		if (applicationThreads.size() == 0) {
 			permission = true;

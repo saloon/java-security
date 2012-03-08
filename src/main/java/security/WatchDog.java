@@ -174,7 +174,8 @@ public class WatchDog implements Runnable {
 								continue;
 							}
 						}
-	
+						
+						Debugger.getInstance().print("###### CHECKING THREAD FOR MAXIMUM OF TIME");
 						// Check if maximum of time exceeded
 						if (toObserve.getCurrentRealTime() >= this.toObserve.getMaxRealTime()
 								|| toObserve.getCurrentCPUTime() <= 0) {
