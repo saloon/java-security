@@ -19,8 +19,9 @@ public class MyCode {
 	
 	public void endlessLoop(){
 		while(true){
-            Byte[] x = new Byte[100000033];
-            
+          try{
+        	  Thread.sleep(1000);
+          }catch(Exception e){}
         }
 	}
 

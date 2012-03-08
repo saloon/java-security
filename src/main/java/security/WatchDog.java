@@ -15,6 +15,7 @@ public class WatchDog implements Runnable {
 	private static WatchDog instance = null;
 	private static String securityKey = null;
 
+	private Runtime runtime = Runtime.getRuntime();
 	private ObservedThread toObserve = null;
 	private ThreadMXBean threadManager = ManagementFactory.getThreadMXBean();
 	private Thread ownThread;
@@ -132,7 +133,10 @@ public class WatchDog implements Runnable {
 	 */
 	public void run() {
 		long toWait;
+		
+		
 
+		
 		// If there is no thread to observe, the WatchDog waits until it gets notified
 		if (this.toObserve == null) {
 			synchronized (this) {
@@ -175,13 +179,14 @@ public class WatchDog implements Runnable {
 							}
 						}
 						
-						Debugger.getInstance().print("###### CHECKING THREAD FOR MAXIMUM OF TIME");
+						//Debugger.getInstance().print("###### CHECKING THREAD FOR MAXIMUM OF TIME " + runtime.totalMemory()/(1024*1024));
 						// Check if maximum of time exceeded
 						if (toObserve.getCurrentRealTime() >= this.toObserve.getMaxRealTime()
-								|| toObserve.getCurrentCPUTime() <= 0) {
+								|| toObserve.getCurrentCPUTime() <= 0
+								|| (runtime.totalMemory()/(1024*1024)) > 100) {
 							// if time exceeded - stop the thread
 							
-								while(toObserve.isAlive())
+								if(toObserve.isAlive())
 									toObserve.getThread().stop();
 								
 							Debugger.getInstance().print("The thread " + toObserve.getThread() + " was too slow");
