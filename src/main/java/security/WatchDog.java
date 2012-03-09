@@ -88,7 +88,7 @@ public class WatchDog implements Runnable {
 			toObserve = null;
 			this.threadShouldStop = true;
 		} else {
-			Debugger.getInstance().print("It's not allowed to stop the WatchDog");
+			Logger.getInstance().info("It's not allowed to stop the WatchDog");
 		}
 	}
 
@@ -143,7 +143,7 @@ public class WatchDog implements Runnable {
 				try {
 					this.wait();
 				} catch (Exception e) {
-					Debugger.getInstance().print(e);
+					Logger.getInstance().error(e.toString());
 				}
 			}
 		}
@@ -189,7 +189,7 @@ public class WatchDog implements Runnable {
 								if(toObserve.isAlive())
 									toObserve.getThread().stop();
 								
-							Debugger.getInstance().print("The thread " + toObserve.getThread() + " was too slow");
+							Logger.getInstance().info("The thread " + toObserve.getThread() + " was too slow");
 						}
 					} else {
 						// If the thread isn't alive anymore, the WatchDog waits
@@ -199,7 +199,7 @@ public class WatchDog implements Runnable {
 					}
 				}
 			} catch (Exception e) {
-				Debugger.getInstance().print(e);
+				Logger.getInstance().info(e.toString());
 			}
 		}
 	}

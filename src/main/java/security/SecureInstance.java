@@ -26,7 +26,7 @@ public class SecureInstance implements Runnable {
 	}
 
 	private final String className;
-	private long maxCPUTime = 400;
+	private long maxCPUTime = 100;
 	private long maxRealTime = 1000;
 	private RunMethod method = null;
 
@@ -133,8 +133,6 @@ public class SecureInstance implements Runnable {
 	 */
 	public Object getInstance() throws Exception {
 		if (returnValue == null) {
-			Debugger.getInstance().print(
-					"Constructor of " + className + " is NULL");
 			throw new Exception("Constructor of " + className + " given NULL");
 		}
 		return returnValue;
@@ -153,7 +151,7 @@ public class SecureInstance implements Runnable {
 			returnValue = Class.forName(className).newInstance();
 		} catch (final Exception e) {
 			System.out.println("YOU DID SOMETHING ILLEGAL - SHAME ON YOU!");
-			// e.printStackTrace();
+			 e.printStackTrace();
 		}
 	}
 

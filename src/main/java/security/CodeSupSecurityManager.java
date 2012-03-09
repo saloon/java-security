@@ -3,6 +3,7 @@ package security;
 import java.io.FileDescriptor;
 import java.net.InetAddress;
 import java.security.Permission;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
@@ -18,10 +19,10 @@ public class CodeSupSecurityManager extends SecurityManager {
 	private static CodeSupSecurityManager instance;
 
 	/**  allowedPermissions denies specific permissions */
-	private final Vector<String> allowedPermissions = new Vector<String>();
+	private final ArrayList<String> allowedPermissions = new ArrayList<String>();
 
 	/** in applicationsThreads are all threads with enough permission */
-	private final Vector<ThreadGroup> applicationThreads = new Vector<ThreadGroup>();
+	private final ArrayList<ThreadGroup> applicationThreads = new ArrayList<ThreadGroup>();
 
 	private boolean permission = false;
 
@@ -29,6 +30,7 @@ public class CodeSupSecurityManager extends SecurityManager {
 	private Random random = null;
 	private String securityKey = null;
 	private String token = null;
+	private String permissionRequest;
 	
 	/**
 	 * Singelton Instance-Method
@@ -68,7 +70,17 @@ public class CodeSupSecurityManager extends SecurityManager {
 		}
 		return permission;
 	}
-
+		
+	void printIt(String s) throws SecurityException{
+		permissionRequest = s + " for "  + Thread.currentThread().toString();
+		Logger.getInstance().info("ASK PERMISSION " + permissionRequest);
+		if (!accessOK()) {
+			Logger.getInstance().error("PERMISSION DENIED " + permissionRequest);
+			throw new SecurityException("PERMISSION DENIED" + permissionRequest);
+		}
+	}
+	
+	
 	/**
 	 * If a thread needs permission, it register the thread into the SecurityManager
 	 * 
@@ -78,21 +90,19 @@ public class CodeSupSecurityManager extends SecurityManager {
 	 *            The thread that needs the permissions
 	 */
 	public void allowThread(String key, Thread t) {
+		permissionRequest = "allowThread " +  t.toString();
+		
+		Logger.getInstance().info(permissionRequest);
 		if (key.equals(securityKey)) {
 			applicationThreads.add(t.getThreadGroup());
 		} else {
-			Debugger.getInstance().print(
-					"Try to allow Thread for " + Thread.currentThread());
+			Logger.getInstance().error(permissionRequest);
 		}
 	}
 
 	@Override
 	public void checkAccept(String host, int port) {
-		Debugger.getInstance().print("checkAccept for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkAccept(host,port)");
 	}
 
 	/**
@@ -101,252 +111,137 @@ public class CodeSupSecurityManager extends SecurityManager {
 	 */
 	@Override
 	public void checkAccess(Thread thread) {
-		Debugger.getInstance().print("checkAccess Thread for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkAccess(thread)");
 	}
 
 	@Override
 	public void checkAccess(ThreadGroup arg0) {
-		Debugger.getInstance().print("checkAccess ThreadGroup for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkAccess(ThreadGroup)");
 	}
 
 	@Override
 	public void checkAwtEventQueueAccess() {
-		Debugger.getInstance().print("checkAwtEventQueueAccess for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkAwtEventQueueAccess");
 	}
 
 	@Override
 	public void checkConnect(String host, int port) {
-		Debugger.getInstance().print("checkConnect for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkConnect(String host, int port)");
 	}
 
 	@Override
 	public void checkConnect(String host, int port, Object executionContext) {
-		Debugger.getInstance().print("checkConnect for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkConnect(String host, int port, Object executionContext)");
 	}
 
 	@Override
 	public void checkCreateClassLoader() {
-		Debugger.getInstance().print("checkCreateClassLoader for " + Thread.currentThread());
-		if (!accessOK()) {
-			// Debugger.getInstance().print("checkCreateClassLoader for " +
-			// Thread.currentThread());
-			// throw new
-			// SecurityException("No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		//printIt("checkCreateClassLoader");
 	}
 
 	@Override
 	public void checkDelete(String filename) {
-		Debugger.getInstance().print("checkDelete for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkDelete(String filename)");
 	}
 
 	@Override
 	public void checkExec(String command) {
-		Debugger.getInstance().print("checkExec for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkExec(String command)");
 	}
 
 	@Override
 	public void checkExit(int status) {
-		Debugger.getInstance().print("checkExit for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkExit(int status)");
 	}
 
 	@Override
 	public void checkLink(String library) {
-		Debugger.getInstance().print("checkLink for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkLink(String library)");
 	}
 
 	@Override
 	public void checkListen(int port) {
-		Debugger.getInstance().print("checkListen for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkListen(int port)");
 	}
 
 	@Override
 	public void checkMemberAccess(Class<?> arg0, int arg1) {
-		Debugger.getInstance().print("checkMemberAccess for " + Thread.currentThread());
-		if (!accessOK()) {
-			// throw new
-			// SecurityException("No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		//printIt("checkMemberAccess(Class<?> arg0, int arg1)");
 	}
 
 	@Override
 	public void checkMulticast(InetAddress arg0) {
-		Debugger.getInstance().print("checkMulticast for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkMulticast(InetAddress arg0)");
 	}
 
 	@Override
 	public void checkMulticast(InetAddress arg0, byte arg1) {
-		Debugger.getInstance().print("checkMulticast for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkMulticast(InetAddress arg0, byte arg1)");
 	}
 
 	@Override
 	public void checkPackageDefinition(String packageName) {
-		Debugger.getInstance().print("checkPackageDefinition for " +
-				Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkPackageDefinition(String packageName)");
 	}
 
 	@Override
 	public void checkPermission(Permission perm) {
-		Debugger.getInstance().print(perm.getName() + " for " + Thread.currentThread());
-		if (!accessOK()) {
-			if (!allowedPermissions.contains(perm.getName())) {
-				throw new SecurityException(
-						"No Way! - YOU ARE NOT ALLOWED TO DO THIS! "
-								+ Thread.currentThread());
-			}
-		}
-
+		//printIt("checkPermission(Permission perm)");
 	}
 
 	@Override
 	public void checkPrintJobAccess() {
-		Debugger.getInstance().print("checkAccess printJobAccess for "+ Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkPrintJobAccess()");
 	}
 
 	@Override
 	public void checkPropertiesAccess() {
-		Debugger.getInstance().print("checkAccess PropertiesAccess for "+ Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkPropertiesAccess()");
 	}
 
 	@Override
 	public void checkPropertyAccess(String key) {
-		Debugger.getInstance().print("checkPropertyAccess for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkPropertyAccess(String key)");
 	}
 
 	@Override
 	public void checkRead(FileDescriptor filedescriptor) {
-		Debugger.getInstance().print("checkRead for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkRead(FileDescriptor filedescriptor)");
 	}
 
 	@Override
 	public void checkRead(String filename) {
-		if (!accessOK()) {
-			// throw new
-			// SecurityException("No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		//printIt("checkRead(String filename)");
 	}
 
 	@Override
 	public void checkRead(String filename, Object executionContext) {
-		Debugger.getInstance().print("checkRead for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkRead(String filename, Object executionContext)");
 	}
 
 	@Override
 	public void checkSecurityAccess(String arg0) {
-		Debugger.getInstance().print("securityAccess for "+ Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkSecurityAccess(String arg0)");
 	}
 
 	@Override
 	public void checkSetFactory() {
-		Debugger.getInstance().print("checkAccess SetFactory for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkSetFactory()");
 	}
 
 	@Override
 	public void checkSystemClipboardAccess() {
-		Debugger.getInstance().print("SystemClipboardAccess for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkSystemClipboardAccess()");
 	}
 
 	@Override
 	public void checkWrite(FileDescriptor filedescriptor) {
-		Debugger.getInstance().print("CheckWrite for " + Thread.currentThread());
-		if (!accessOK()) {
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkWrite(FileDescriptor filedescriptor)");
 	}
 
 	@Override
 	public void checkWrite(String filename) {
-		Debugger.getInstance().print("checkWrite for " + Thread.currentThread());
-		if (!accessOK()) {
-			
-			throw new SecurityException(
-					"No Way! - YOU ARE NOT ALLOWED TO DO THIS!");
-		}
+		printIt("checkWrite(String filename)");
 	}
 
 	/**
@@ -375,7 +270,7 @@ public class CodeSupSecurityManager extends SecurityManager {
 			final ThreadGroup threadGroup = new ThreadGroup(keygen());
 			return threadGroup;
 		} else {
-			Debugger.getInstance().print(
+			Logger.getInstance().debug(
 					"No Permission to get a ThreadGroup "
 							+ Thread.currentThread());
 			return null;

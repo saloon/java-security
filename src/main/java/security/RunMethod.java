@@ -26,8 +26,8 @@ class RunMethod implements Runnable {
 	}
 
 	private Boolean found = true;
-	private long maxCPUTime = 1000;
-	private long maxRealTime = 2000;
+	private long maxCPUTime = 100;
+	private long maxRealTime = 200;
 	private Method method = null;
 
 	private String methodName = null;
@@ -110,8 +110,7 @@ class RunMethod implements Runnable {
 			returnValue = (method.invoke(secureInstance.getInstance(),
 					parameters));
 		} catch (final Exception e) {
-			e.printStackTrace();
-			Debugger.getInstance().print("Something went wrong with method: " + methodName);
+			Logger.getInstance().info("Something went wrong with method: " + methodName);
 		}
 	}
 
