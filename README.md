@@ -1,6 +1,8 @@
 Java Security for CodeSup
 =========================
 
+[![Build Status](https://secure.travis-ci.org/codesup/java-security.png?branch=master)](http://travis-ci.org/codesup/java-security)
+
 **Java Security** is a security engine for running untrusted code in a save environment. It's created to run on [Heroku](http://heroku.com) and intended to secure user classes for [CodeSup](http://codesup.com).
 
 It's not fully tested currently, please wait until we release the beta.
