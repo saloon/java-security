@@ -17,7 +17,7 @@ How to use?
 
 Instructions will follow soon.
 
-**Warning:** It's recomended to load the compiled [.jar file](https://github.com/codesup/java-security/raw/master/target/JavaSecurity.jar) via the Java [URLClassLoader](http://docs.oracle.com/javase/1.4.2/docs/api/java/net/URLClassLoader.html) in case we have to patch something.
+**Warning:** It's recommended to load the compiled [.jar file](https://github.com/codesup/java-security/raw/master/target/JavaSecurity.jar) via the Java [URLClassLoader](http://docs.oracle.com/javase/1.4.2/docs/api/java/net/URLClassLoader.html) in case we have to patch something.
 
 How can I help?
 ---------------
